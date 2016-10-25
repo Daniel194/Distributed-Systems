@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+type Shape interface {
+	area() float64
+}
+
 type Circle struct {
 	x, y, r float64
 }
@@ -31,10 +35,19 @@ func (c *Circle) area() float64 {
 	return math.Pi * c.r * c.r
 }
 
+func totalArea(shapes ...Shape) float64 {
+	var area float64
+	for _, s := range shapes {
+		area += s.area()
+	}
+	return area
+}
+
 func main() {
 	r := Rectangle{0, 0, 10, 10}
 	c := Circle{x: 0, y: 0, r: 5}
 
-	fmt.Println(r.area())
-	fmt.Println(c.area())
+	fmt.Println("Rectangle area : ", r.area())
+	fmt.Println("Circle area : ", c.area())
+	fmt.Println("Total area : ", totalArea(&c, &r))
 }
