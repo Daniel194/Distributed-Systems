@@ -1,0 +1,95 @@
+package main
+
+import (
+	"image/color"
+	"image/png"
+	"log"
+	"os"
+)
+
+type ImageSet interface {
+	Set(x, y int, c color.Color)
+}
+
+func main() {
+	file, err := os.Open("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/go-docker.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	img, err := png.Decode(file)
+	if err != nil {
+		log.Fatal(os.Stderr, "%s: %v\n", "in.png", err)
+	}
+
+	b := img.Bounds()
+
+	imgSet := img.(ImageSet)
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
+			oldPixel := img.At(x, y)
+			_, g, _, a := oldPixel.RGBA()
+
+			pixel := color.RGBA{uint8(g), uint8(g), uint8(g), uint8(a)}
+			imgSet.Set(x, y, pixel)
+		}
+	}
+
+	fd, err := os.Create("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/gray.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = png.Encode(fd, img)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = fd.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file, err = os.Open("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/go-docker.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	img, err = png.Decode(file)
+	if err != nil {
+		log.Fatal(os.Stderr, "%s: %v\n", "in.png", err)
+	}
+
+	b = img.Bounds()
+
+	imgSet = img.(ImageSet)
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
+			oldPixel := img.At(x, y)
+			r, g, b, a := oldPixel.RGBA()
+
+			r = 65535 - r
+			g = 65535 - g
+			b = 65535 - b
+			pixel := color.RGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
+			imgSet.Set(x, y, pixel)
+		}
+	}
+
+	fd, err = os.Create("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/out.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = png.Encode(fd, img)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = fd.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
