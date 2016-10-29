@@ -6,9 +6,11 @@ import (
 	"bytes"
 )
 
+const DIRECTORY = "/Users/daniellungu/Workspace/Distributed-Systems/resources/"
+
 func main() {
 	// open input file
-	fi, err := os.Open("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/input.txt")
+	fi, err := os.Open(DIRECTORY + "input.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -20,7 +22,7 @@ func main() {
 	}()
 
 	// open output file
-	fo, err := os.Create("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/output.txt")
+	fo, err := os.Create(DIRECTORY + "output.txt")
 	if err != nil {
 		panic(err)
 	}

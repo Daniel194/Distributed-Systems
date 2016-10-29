@@ -11,8 +11,10 @@ type ImageSet interface {
 	Set(x, y int, c color.Color)
 }
 
+const DIRECTORY = "/Users/daniellungu/Workspace/Distributed-Systems/resources/"
+
 func main() {
-	file, err := os.Open("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/go-docker.png")
+	file, err := os.Open(DIRECTORY + "go-docker.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +38,7 @@ func main() {
 		}
 	}
 
-	fd, err := os.Create("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/gray.png")
+	fd, err := os.Create(DIRECTORY + "gray.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,7 +53,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	file, err = os.Open("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/go-docker.png")
+	file, err = os.Open(DIRECTORY + "go-docker.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -78,7 +80,7 @@ func main() {
 		}
 	}
 
-	fd, err = os.Create("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/out.png")
+	fd, err = os.Create(DIRECTORY + "out.png")
 	if err != nil {
 		log.Fatal(err)
 	}

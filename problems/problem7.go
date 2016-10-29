@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+const DIRECTORY = "/Users/daniellungu/Workspace/Distributed-Systems/resources/"
+
 type Page struct {
 	ID    int    `json:"id"`
 	Title string `json:"title"`
@@ -38,7 +40,7 @@ func main() {
 }
 
 func getPages() []Page {
-	raw, err := ioutil.ReadFile("/Users/daniellungu/Documents/Workspace/Distributed-Systems/resources/pages.json")
+	raw, err := ioutil.ReadFile(DIRECTORY + "pages.json")
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
